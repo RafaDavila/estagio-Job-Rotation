@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Inverter String</title>
+  </head>
+
+  <body>
+    <h1>Inverter String</h1>
+    <label for="string-input">Digite uma string:</label>
+    <input type="text" id="string-input">
+    <button onclick="inverterString()">Inverter</button>
+    <p id="resultado"></p>
+    
+    <script>
+      function inverterString() {
+        const inputElement = document.getElementById("string-input");
+        const resultadoElement = document.getElementById("resultado");
+        const stringOriginal = inputElement.value;
+        const stringInvertida = stringOriginal.split("").reverse().join("");
+        resultadoElement.innerText = stringInvertida;
+      }
+    </script>
+
+  </body>
+</html>

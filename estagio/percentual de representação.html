@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Faturamento Mensal da Distribuidora</title>
+  </head>
+
+  <body>
+    <h1>Faturamento Mensal da Distribuidora</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Estado</th>
+          <th>Faturamento</th>
+          <th>Percentual</th>
+        </tr>
+      </thead>
+      <tbody id="tabela-faturamento">
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>Total</td>
+          <td id="total-faturamento"></td>
+          <td>100%</td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <script>
+        const faturamentoPorEstado = {
+    'SP': 67836.43,
+    'RJ': 36678.66,
+    'MG': 29229.88,
+    'ES': 27165.48,
+    'Outros': 19849.53,
+    };
+
+    let totalFaturamento = 0;
+
+    for (let estado in faturamentoPorEstado) {
+    totalFaturamento += faturamentoPorEstado[estado];
+    }
+
+    const tabelaFaturamento = document.getElementById('tabela-faturamento');
+    const totalFaturamentoElemento = document.getElementById('total-faturamento');
+
+    for (let estado in faturamentoPorEstado) {
+    const faturamento = faturamentoPorEstado[estado];
+    const percentual = (faturamento / totalFaturamento) * 100;
+
+    const linha = document.createElement('tr');
+    linha.innerHTML = `
+        <td>${estado}</td>
+        <td>${faturamento.toFixed(2)}</td>
+        <td>${percentual.toFixed(2)}%</td>
+    `;
+
+    tabelaFaturamento.appendChild(linha);
+    }
+
+    totalFaturamentoElemento.innerText = totalFaturamento.toFixed(2);
+
+    </script>
+
+  </body>
+
+</html>

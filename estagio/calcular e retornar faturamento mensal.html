@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faturamento Mensal</title>
+
+</head>
+
+<body>
+    <h1>Faturamento Mensal:</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Dia</th>
+                <th>Valor</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+        </tbody>
+
+    </table>
+
+    <script>
+        fetch('dados.json')
+        .then(response => response.json())
+        .then(data => {
+            const tableBody = document.getElementById('table-body');
+
+            data.sort((a, b) => a.valor - b.valor);
+
+            const menorValor = data[0];
+            const menorValorRow = document.createElement('tr');
+            menorValorRow.innerHTML = `<td>${menorValor.dia}</td><td>${menorValor.valor.toFixed(2)}</td>`;
+            tableBody.appendChild(menorValorRow);
+
+            const maiorValor = data[data.length - 1];
+            const maiorValorRow = document.createElement('tr');
+            maiorValorRow.innerHTML = `<td>${maiorValor.dia}</td><td>${maiorValor.valor.toFixed(2)}</td>`;
+            tableBody.appendChild(maiorValorRow);
+
+            const mediaMensal = data.reduce((total, item) => total + item.valor, 0) / data.length;
+
+            const diasAcimaDaMedia = data.filter(item => item.valor > mediaMensal).length;
+
+            const resultadoRow = document.createElement('tr');
+            resultadoRow.innerHTML = `<td colspan="2">Média: ${mediaMensal.toFixed(2)}. Dias acima da média: ${diasAcimaDaMedia}</td>`;
+            tableBody.appendChild(resultadoRow);
+        })
+        .catch(error => {
+            console.error('Erro ao carregar o arquivo JSON', error);
+        });
+    </script>
+
+</body>
+</html>
+
